@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -31,13 +31,14 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: "./src/assets/svg", to: "./assets/svg" },
-        ],
-      }),
+        { from: './src/assets/svg', to: './assets/svg' },
+      ],
+    }),
   ],
   optimization: {
     // eslint-disable-next-line quotes
     minimizer: [`...`, new CssMinimizerPlugin()],
+    minimize: false,
   },
   module: {
     rules: [
