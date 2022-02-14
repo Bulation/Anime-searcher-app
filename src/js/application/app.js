@@ -10,7 +10,12 @@ export default class Application {
     this.view.showWishList = this.handleShowWishList;
     this.view.showMainPage = this.handleShowMainPage;
     this.model.updateData = this.handleUpdateData;
-    this.handleSubmitData('naruto');
+    if (this.model.animes.length === 0) {
+      this.handleSubmitData('naruto');
+    }
+    else {
+      this.handleUpdateData(this.model.animes);
+    }
     this.view.addToWishList = this.handleAddToWishList;
   }
 

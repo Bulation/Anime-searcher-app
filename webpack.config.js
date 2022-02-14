@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -28,11 +27,6 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: '[contenthash].css',
-    }),
-    new CopyPlugin({
-      patterns: [
-        { from: './src/assets/svg', to: './assets/svg' },
-      ],
     }),
   ],
   optimization: {

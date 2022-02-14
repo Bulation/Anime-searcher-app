@@ -1,12 +1,13 @@
 export default class Model {
   constructor() {
-    this.animes = [];
+    this.animes = JSON.parse(localStorage.getItem('main')) || [];
     this.wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
   }
 
   addAnimes(array) {
     this.animes = array.data;
     this.updateData(this.animes);
+    localStorage.setItem('main', JSON.stringify(this.animes));
   }
 
   addDataToWishList(card) {

@@ -24,6 +24,7 @@ export default class View {
     };
     mainPageButton.node.onclick = () => {
       input.show();
+      input.node.focus();
       wishlistButton.node.classList.toggle('header__wishlist-button_active');
       mainPageButton.node.classList.toggle('header__main-button_active');
       this.showMainPage();
@@ -67,7 +68,10 @@ export default class View {
   createCard(attributes) {
     const card = new Card(this.main.node, 'div', 'card', '');
     card.wishlistButton.node.onclick = () => {
+      console.log(card);
+      card.wishlistButton.node.remove();
       this.addToWishList(card.node.outerHTML);
+      card.wishlistButton = new Component(card.buttonsContainer.node, 'button', 'card__wishlist-button', 'Add to wishlist');
     };
     card.img.node.src = `${attributes.posterImage.large}`;
     if (attributes.titles.en !== undefined) {
