@@ -6,10 +6,12 @@ export default class Application {
     this.node = node;
     this.model = new Model();
     this.view = new View(this.node);
-    this.view.input.node.focus();
-    this.view.input.submitData = this.handleSubmitData;
+    this.view.submitData = this.handleSubmitData;
+    this.view.showWishList = this.handleShowWishList;
+    this.view.showMainPage = this.handleShowMainPage;
     this.model.updateData = this.handleUpdateData;
     this.handleSubmitData('naruto');
+    this.view.addToWishList = this.handleAddToWishList;
   }
 
   handleSubmitData = (data) => {
@@ -19,6 +21,18 @@ export default class Application {
   };
 
   handleUpdateData = (animes) => {
-    this.view.displayCards(animes.data);
+    this.view.displayCards(animes);
+  };
+
+  handleAddToWishList = (card) => {
+    this.model.addDataToWishList(card);
+  };
+
+  handleShowWishList = () => {
+    this.view.displayWishList(this.model.wishlist);
+  };
+
+  handleShowMainPage = () => {
+    this.view.displayCards(this.model.animes);
   };
 }

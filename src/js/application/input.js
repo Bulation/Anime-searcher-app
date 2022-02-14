@@ -5,10 +5,13 @@ export default class Input extends Component {
     super(parent, tagName, className, content);
     this.node.type = type;
     this.node.placeholder = placeholder;
-    this.node.onkeydown = (e) => {
-      if (e.code === 'Enter') {
-        this.submitData(this.node.value);
-      }
-    };
+  }
+
+  hide() {
+    this.node.style.visibility = 'hidden';
+  }
+
+  show() {
+    this.node.style.visibility = 'visible';
   }
 }

@@ -7,6 +7,27 @@ export default class View {
     this.node = node;
     this.header = new Component(this.node, 'header', 'header', '');
     this.headerTitle = new Component(this.header.node, 'h1', 'header__title', 'Anime Searcher');
+    const mainPageButton = new Component(this.header.node, 'button', 'header__main-button header__main-button_active', 'Main');
+    const wishlistButton = new Component(this.header.node, 'button', 'header__wishlist-button', 'Wishlist');
+    const input = new Input(this.header.node, 'input', 'header__search', '', 'search', 'search anime');
+    input.node.focus();
+    input.node.onkeydown = (e) => {
+      if (e.code === 'Enter') {
+        this.submitData(input.node.value);
+      }
+    };
+    wishlistButton.node.onclick = () => {
+      input.hide();
+      wishlistButton.node.classList.toggle('header__wishlist-button_active');
+      mainPageButton.node.classList.toggle('header__main-button_active');
+      this.showWishList();
+    };
+    mainPageButton.node.onclick = () => {
+      input.show();
+      wishlistButton.node.classList.toggle('header__wishlist-button_active');
+      mainPageButton.node.classList.toggle('header__main-button_active');
+      this.showMainPage();
+    };
     this.main = new Component(this.node, 'main', 'main', '');
     this.footer = new Component(this.node, 'footer', 'footer', '');
     this.footerContainer = new Component(this.footer.node, 'div', 'footer-container', '');
@@ -14,7 +35,6 @@ export default class View {
     this.github.node.href = 'https://github.com/Bulation';
     this.year = new Component(this.footerContainer.node, 'time', 'footer-item footer__year', '2022');
     this.logo = new Component(this.footerContainer.node, 'a', 'footer-item footer__logo', '');
-    this.input = new Input(this.header.node, 'input', 'header__search', '', 'search', 'search');
     this.logo.node.href = 'https://rs.school/js';
   }
 
@@ -26,21 +46,41 @@ export default class View {
       this.warning = new Component(this.main.node, 'p', '', 'Anime is not found, please, try again');
       return;
     }
-    animes.forEach((el, i) => {
-      this.card = new Card(this.main.node, 'div', 'card', '');
-      this.card.img.node.src = `${animes[i].attributes.posterImage.large}`;
-      if (animes[i].attributes.titles.en !== undefined) {
-        this.card.img.node.alt = `Poster of ${animes[i].attributes.titles.en}`;
-        this.card.title.node.textContent = `${animes[i].attributes.titles.en}`;
-      } else {
-        this.card.img.node.alt = `Poster of ${animes[i].attributes.canonicalTitle}`;
-        this.card.title.node.textContent = `${animes[i].attributes.canonicalTitle}`;
-      }
-      if (animes[i].attributes.averageRating === null) {
-        this.card.rating.node.textContent = 'N/A';
-      } else {
-        this.card.rating.node.textContent = `${animes[i].attributes.averageRating}`;
-      }
+    animes.forEach((el) => {
+      this.createCard(el.attributes);
     });
+  }
+
+  displayWishList(cards) {
+    while (this.main.node.firstChild) {
+      this.main.node.removeChild(this.main.node.firstChild);
+    }
+    if (cards.length === 0) {
+      this.warning = new Component(this.main.node, 'p', '', 'Wishlist is empty, add some anime to wishlist');
+      return;
+    }
+    cards.forEach((el) => {
+      this.main.node.insertAdjacentHTML('beforeend', el);
+    });
+  }
+
+  createCard(attributes) {
+    const card = new Card(this.main.node, 'div', 'card', '');
+    card.wishlistButton.node.onclick = () => {
+      this.addToWishList(card.node.outerHTML);
+    };
+    card.img.node.src = `${attributes.posterImage.large}`;
+    if (attributes.titles.en !== undefined) {
+      card.img.node.alt = `Poster of ${attributes.titles.en}`;
+      card.title.node.textContent = `${attributes.titles.en}`;
+    } else {
+      card.img.node.alt = `Poster of ${attributes.canonicalTitle}`;
+      card.title.node.textContent = `${attributes.canonicalTitle}`;
+    }
+    if (attributes.averageRating === null) {
+      card.rating.node.textContent = 'N/A';
+    } else {
+      card.rating.node.textContent = `${attributes.averageRating}`;
+    }
   }
 }
