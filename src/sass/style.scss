@@ -2,16 +2,30 @@
 
 .header {
   display: flex;
+  justify-content: space-between;
   background-color: #373b69;
   padding: 20px;
   &__search {
     padding: 10px;
     display: block;
-    margin-left: auto;
   }
-  &__title {
-    margin-left: auto;
+  &__wishlist-button {
+    background-color: white;
+    &_active {
+      background-color: blue;
+    }
   }
+  &__main-button {
+    background-color: white;
+    &_active {
+      background-color: blue;
+    }
+  }
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
 }
 
 a {
@@ -34,7 +48,6 @@ body {
   align-items: center;
 }
 
-
 main {
   padding: 20px 0 50px;
   display: flex;
@@ -44,6 +57,8 @@ main {
 }
 
 .card {
+  position: relative;
+  overflow: hidden;
   background-color: #373b69;
   max-width: 550px;
   width: 100%;
@@ -53,6 +68,32 @@ main {
     padding: 20px 10px;
     gap: 20px;
     justify-content: space-between;
+  }
+  &__rating {
+    color: gold;
+    background-color: green;
+    padding: 10px;
+  }
+  &__buttons-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 10px;
+    transition: transform 0.3s ease-in;
+    transform: translateY(100%);
+  }
+  &__wishlist-button {
+    display: block;
+    padding: 10px;
+    background-color: burlywood;
+    margin: 0 auto;
+  }
+  &:hover {
+    .card__buttons-container {
+      transform: translateY(0%);
+    }
   }
 }
 
