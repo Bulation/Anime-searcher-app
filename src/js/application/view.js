@@ -12,7 +12,7 @@ export default class View {
     const input = new Input(this.header.node, 'input', 'header__search', '', 'search', 'search anime');
     input.node.focus();
     input.node.onkeydown = (e) => {
-      if (e.code === 'Enter') {
+      if (e.key === 'Enter') {
         this.submitData(input.node.value);
       }
     };
@@ -74,7 +74,7 @@ export default class View {
       card.wishlistButton = new Component(card.buttonsContainer.node, 'button', 'card__wishlist-button', 'Add to wishlist');
     };
     card.img.node.src = `${attributes.posterImage.large}`;
-    if (attributes.titles.en !== undefined) {
+    if (attributes.titles.en) {
       card.img.node.alt = `Poster of ${attributes.titles.en}`;
       card.title.node.textContent = `${attributes.titles.en}`;
     } else {

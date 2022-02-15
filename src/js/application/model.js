@@ -6,6 +6,7 @@ export default class Model {
 
   addAnimes(array) {
     this.animes = array.data;
+    console.log(this.animes);
     this.updateData(this.animes);
     localStorage.setItem('main', JSON.stringify(this.animes));
   }
